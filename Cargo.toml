@@ -1,0 +1,24 @@
+[package]
+name = "live2d-ai-mod-a2a"
+description = "A2A（Agent2Agent）协议核 Mod（0.3.9）：agent card + JSON-RPC message/send / tasks/get + 进程内任务表；缺省停用，宿主只留 loopback/Origin/CT 门"
+version = "0.3.1"
+edition = "2024"
+rust-version = "1.92"
+license = "AGPL-3.0-only"
+authors = ["Sakura Motion Project"]
+
+# 协议核（core / rpc / tasks / card / sanitize）刻意**只用 serde_json**：不碰
+# HTTP server、不碰宿主 Mod API、不碰 [llm] / 密钥。宿主胶水（factory.rs：
+# ModFactory / ModRuntime 薄壳，0.3.9 rc.3b 由宿主侧维护）需要 mod-system；
+# 协议层不 use 它（红线由测试守：范围外方法 chat 调用次数 = 0，且无 HTTP 依赖）。
+[dependencies]
+live2d-ai-mod-system = { path = "../Live2D-Ai/crates/live2d-ai-mod-system" }
+serde_json = "1"
+
+[lints.rust]
+unsafe_code = "deny"
+
+[lints.clippy]
+all = "warn"
+
+[workspace]
